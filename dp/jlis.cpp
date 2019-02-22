@@ -9,33 +9,32 @@ using namespace std;
 typedef long long ll;
 
 int n,m;
-ll A[MAX_LEN], B[MAX_LEN];
+int A[MAX_LEN], B[MAX_LEN];
 int dp[MAX_LEN][MAX_LEN];
 
 void init() {
   memset(dp, -1, sizeof dp);
-  A[0] = B[0] = LONG_MIN;
+
   cin >> n >> m;
-  for(int i = 1 ; i <= n ; i ++)
+  for(int i = 0 ; i < n ; i ++)
     cin >> A[i];
-  for(int i = 1 ; i <= m ; i ++)
+  for(int i = 0 ; i < m ; i ++)
     cin >> B[i];
 }
 
 int jlis(int a, int b) {
-  int& ret = dp[a][b];
+  int& ret = dp[a+1][b+1];
   if(ret != -1) return ret;
+  
+  ll A_val = (a == -1 ? LONG_MIN : A[a]);
+  ll B_val = (b == -1 ? LONG_MIN : B[b]);
+  ll max_val = max(A_val, B_val);
 
-  ll max_val = max(A[a], B[b]);
-  if(max_val == LONG_MIN)
-    ret = 2;
-  else
-    ret = A[a] == B[b] ? 1 : 2;
-
-  for(int i = a + 1; i <= n ; i ++)
+  ret = 2;
+  for(int i = a + 1; i < n ; i ++)
     if(max_val < A[i])
       ret = max(ret, jlis(i, b) + 1);
-  for(int i = b + 1 ; i <= m ; i ++)
+  for(int i = b + 1 ; i < m ; i ++)
     if(max_val < B[i])
       ret = max(ret, jlis(a, i) + 1);
   return ret;
@@ -43,7 +42,7 @@ int jlis(int a, int b) {
 
 void solve() {
   init();
-  cout << (jlis(0, 0) - 2) << endl;
+  cout << (jlis(-1, -1) - 2) << endl;
 }
 
 int main()
