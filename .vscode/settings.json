@@ -5,6 +5,7 @@
     "algorithm": "cpp",
     "vector": "cpp",
     "string": "cpp",
-    "iosfwd": "cpp"
+    "iosfwd": "cpp",
+    "set": "cpp"
   }
 }
